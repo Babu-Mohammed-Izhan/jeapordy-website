@@ -11,13 +11,12 @@ import FinalJeopardy from './FinalJeopardy';
 
 ReactGA.initialize('UA-123778931-2', {
   gaOptions: {
-    siteSpeedSampleRate: 100
-  }
+    siteSpeedSampleRate: 100,
+  },
 });
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 class App extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -25,55 +24,43 @@ class App extends React.Component {
       game: null,
       players: [],
       playing: false,
-      round: "single",
+      round: 'single',
       currentCategory: null,
-      currentClue: null
-    }
+      currentClue: null,
+    };
   }
 
   render() {
     if (this.state.game === null) {
       ReactGA.event({
         category: 'Navigation',
-        action: 'Show Game Loader'
+        action: 'Show Game Loader',
       });
       return (
         <div className="app">
-          <GameLoader
-            updateGame={this.updateGame}
-          />
+          <GameLoader updateGame={this.updateGame} addPlayer={this.addPlayer} />
         </div>
       );
-    } else if (!this.state.playing) {
-      return (
-        <div className="app">
-          <PlayerChooser
-            players={this.state.players}
-            addPlayer={this.addPlayer}
-            playGame={this.playGame}
-          />
-        </div>
-      );
-    } else if (this.state.round === "single" || this.state.round === "double") {
+    } else if (this.state.round === 'single' || this.state.round === 'double') {
       const { categoriesShown, currentCategory, currentClue } = this.state;
       const board = this.state.game[this.state.round];
 
       // See if we should be able to proceed to Double Jeopardy
-      let allowProceedToDouble = this.state.round === "single";
+      let allowProceedToDouble = this.state.round === 'single';
       if (allowProceedToDouble) {
-        board.forEach(category => {
-          category.clues.forEach(clue => {
+        board.forEach((category) => {
+          category.clues.forEach((clue) => {
             if (clue.chosen === undefined) {
               allowProceedToDouble = false;
             }
-          })
-        })
+          });
+        });
       }
 
-      let allowProceedToFinal = this.state.round === "double";
+      let allowProceedToFinal = this.state.round === 'double';
       if (allowProceedToFinal) {
-        board.forEach(category => {
-          category.clues.forEach(clue => {
+        board.forEach((category) => {
+          category.clues.forEach((clue) => {
             if (clue.chosen === undefined) {
               allowProceedToFinal = false;
             }
@@ -89,18 +76,24 @@ class App extends React.Component {
 
       return (
         <div className="app">
-          {currentCategory === null && currentClue === null && allowProceedToDouble &&
-            <div>
-              <button onClick={this.proceedToDouble} className="proceed-to">
-                Proceed to Double Jeopardy
-              </button>
-            </div>}
-          {currentCategory === null && currentClue === null && allowProceedToFinal &&
-            <div>
-              <button onClick={this.proceedToFinal} className="proceed-to">
-                Proceed to Final Jeopardy
-              </button>
-            </div>}
+          {currentCategory === null &&
+            currentClue === null &&
+            allowProceedToDouble && (
+              <div>
+                <button onClick={this.proceedToDouble} className="proceed-to">
+                  Proceed to Double Jeopardy
+                </button>
+              </div>
+            )}
+          {currentCategory === null &&
+            currentClue === null &&
+            allowProceedToFinal && (
+              <div>
+                <button onClick={this.proceedToFinal} className="proceed-to">
+                  Proceed to Final Jeopardy
+                </button>
+              </div>
+            )}
 
           <JeopardyBoard
             board={board}
@@ -111,24 +104,13 @@ class App extends React.Component {
             currentCategory={currentCategory}
             currentClue={currentClue}
           />
-          <Scoreboard
-            players={this.state.players}
-            currentValue={currentCategory !== null && currentClue !== null ? board[currentCategory].clues[currentClue].value : null}
-            updateScore={this.updateScore}
-            wagering={currentCategory !== null && currentClue !== null && board[currentCategory].clues[currentClue].dailyDouble === true}
-            stats={false}
-          />
-          <button onClick={this.downloadGame} className="download">Download Game in Progress</button>
         </div>
-      )
-    } else if (this.state.round === "final") {
+      );
+    } else if (this.state.round === 'final') {
       const final = this.state.game.final;
       return (
         <div>
-          <FinalJeopardy
-            final={final}
-            finishGame={this.finishGame}
-          />
+          <FinalJeopardy final={final} finishGame={this.finishGame} />
           <Scoreboard
             players={this.state.players}
             currentValue={0}
@@ -136,20 +118,12 @@ class App extends React.Component {
             wagering={true}
             stats={false}
           />
-          <button onClick={this.downloadGame} className="download">Download Game in Progress</button>
         </div>
       );
-    } else if (this.state.round === "done") {
+    } else if (this.state.round === 'done') {
       return (
         <div>
-          <Scoreboard
-            players={this.state.players}
-            currentValue={null}
-            updateScore={this.updateScore}
-            wagering={false}
-            stats={true}
-          />
-          <button onClick={this.downloadGame} className="download">Download Game Result</button>
+          <div></div>
         </div>
       );
     }
@@ -159,144 +133,164 @@ class App extends React.Component {
     ReactGA.event({
       category: 'Game',
       action: 'Add Player',
-      label: name
+      label: name,
     });
-    this.setState(state => ({
-      players: [...state.players, {name: name, score: 0, correct: 0, incorrect: 0}]
+    this.setState((state) => ({
+      players: [
+        ...state.players,
+        { name: name, score: 0, correct: 0, incorrect: 0 },
+      ],
     }));
-  }
+  };
 
   categoryShown = () => {
     ReactGA.event({
       category: 'Game',
       action: 'Show Category',
-      label: `${this.state.round}: ${this.state.game[this.state.round][this.state.categoriesShown].name}`
+      label: `${this.state.round}: ${
+        this.state.game[this.state.round][this.state.categoriesShown].name
+      }`,
     });
-    this.setState(state => ({
-      categoriesShown: state.categoriesShown + 1
+    this.setState((state) => ({
+      categoriesShown: state.categoriesShown + 1,
     }));
-  }
+  };
 
   chooseClue = (i, j) => {
     ReactGA.event({
       category: 'Game',
       action: 'Show Clue',
-      label: `${this.state.round}: ${this.state.game[this.state.round][i].clues[j].clue} (${this.state.game[this.state.round][i].clues[j].solution})`
+      label: `${this.state.round}: ${
+        this.state.game[this.state.round][i].clues[j].clue
+      } (${this.state.game[this.state.round][i].clues[j].solution})`,
     });
-    this.setState(state => {
+    this.setState((state) => {
       let game = Object.assign({}, state.game);
       let round = game[state.round];
       round[i].clues[j].chosen = true;
       return {
         game: game,
         currentCategory: i,
-        currentClue: j
+        currentClue: j,
       };
-    })
-  }
+    });
+  };
 
   backToBoard = () => {
     ReactGA.event({
       category: 'Game',
-      action: 'Back to Board'
+      action: 'Back to Board',
     });
     this.setState({
       currentCategory: null,
-      currentClue: null
-    })
-  }
+      currentClue: null,
+    });
+  };
 
   downloadGame = () => {
     ReactGA.event({
       category: 'Game',
       action: 'Download Game',
-      label: this.state.round
+      label: this.state.round,
     });
-    const element = document.createElement("a");
-    const file = new Blob([JSON.stringify({
-      game: this.state.game,
-      players: this.state.players,
-      round: this.state.round
-    }, null, 4)], {type: "text/plain"});
+    const element = document.createElement('a');
+    const file = new Blob(
+      [
+        JSON.stringify(
+          {
+            game: this.state.game,
+            players: this.state.players,
+            round: this.state.round,
+          },
+          null,
+          4
+        ),
+      ],
+      { type: 'text/plain' }
+    );
     element.href = URL.createObjectURL(file);
-    element.download = "game.json";
+    element.download = 'game.json';
     document.body.appendChild(element);
     element.click();
-  }
+  };
 
   finishGame = () => {
     ReactGA.event({
       category: 'Game',
-      action: 'Finish Game'
+      action: 'Finish Game',
     });
     this.setState({
-      round: "done"
+      round: 'done',
     });
-  }
+  };
 
   playGame = () => {
     ReactGA.event({
       category: 'Game',
-      action: 'Play Game'
+      action: 'Play Game',
     });
     this.setState({
-      playing: true
-    })
-  }
+      playing: true,
+    });
+  };
 
   proceedToDouble = () => {
     ReactGA.event({
       category: 'Game',
-      action: 'Proceed to Double Jeopardy'
+      action: 'Proceed to Double Jeopardy',
     });
     this.setState({
       categoriesShown: 0,
-      round: "double"
+      round: 'double',
     });
-  }
+  };
 
   proceedToFinal = () => {
     ReactGA.event({
       category: 'Game',
-      action: 'Proceed to Final Jeopardy'
+      action: 'Proceed to Final Jeopardy',
     });
     this.setState({
-      round: "final"
+      round: 'final',
     });
-  }
+  };
 
   updateGame = (data) => {
-    const categories = data.game.single.map(c => c.category).concat((data.game.double || []).map(c => c.category)).concat([data.game.final.category]).join(" - ").slice(0, 499)
+    const categories = data.game.single
+      .map((c) => c.category)
+      .concat((data.game.double || []).map((c) => c.category))
+      .concat([data.game.final.category])
+      .join(' - ')
+      .slice(0, 499);
     ReactGA.event({
       category: 'Game',
       action: 'Upload Game',
-      label: categories
+      label: categories,
     });
-    this.setState(state => ({
+    this.setState((state) => ({
       game: data.game,
       players: data.players !== undefined ? data.players : state.players,
       round: data.round !== undefined ? data.round : state.round,
-      playing: data.players !== undefined
+      playing: data.players !== undefined,
     }));
-  }
+  };
 
   updateScore = (player, value, correct) => {
     ReactGA.event({
       category: 'Game',
       action: 'Update Score',
-      label: `${this.state.players[player].name} ${correct ? 'correct' : 'incorrect'} (${value})`
+      label: `${this.state.players[player].name} ${
+        correct ? 'correct' : 'incorrect'
+      } (${value})`,
     });
-    this.setState(state => {
+    this.setState((state) => {
       const players = [...state.players];
       players[player].score += value;
-      if (correct)
-        players[player].correct++;
-      else
-        players[player].incorrect++;
-      return {players};
+      if (correct) players[player].correct++;
+      else players[player].incorrect++;
+      return { players };
     });
-  }
-
+  };
 }
 
 export default App;
