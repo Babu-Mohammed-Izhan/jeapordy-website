@@ -1,6 +1,7 @@
 import React from 'react';
 import './GameLoader.css';
 import sample_game from './assets/sample_game.json';
+import final_game from './assets/shortGame.json';
 
 function validateGame(data) {
   const game = data.game;
@@ -17,24 +18,19 @@ class GameLoader extends React.Component {
     return (
       <div className="game-loader">
         <h1>Jeopardy Player</h1>
-        <p>Designed by Brian Yu</p>
-        <hr />
         <h2>Play a Game</h2>
-        <input type="file" name="file" onChange={this.gameLoadedHandler} />
+        <button onClick={this.gameLoadedHandler}>Play Game</button>
       </div>
     );
   }
 
   gameLoadedHandler = (event) => {
-    event.target.files[0].text().then((text) => {
-      const data = JSON.parse(text);
-      if (validateGame(data)) {
-        this.props.updateGame(data);
-        this.props.addPlayer();
-      } else {
-        console.log('Invalid game.');
-      }
-    });
+    if (validateGame(final_game)) {
+      this.props.updateGame(final_game);
+      this.props.addPlayer();
+    } else {
+      console.log('Invalid game.');
+    }
   };
 
   downloadSampleGame = () => {
