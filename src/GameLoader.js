@@ -19,14 +19,16 @@ class GameLoader extends React.Component {
       <div className="game-loader">
         <h1>Jeopardy Player</h1>
         <h2>Play a Game</h2>
-        <button onClick={this.gameLoadedHandler}>Play Game</button>
+        <button className="playbutton" onClick={this.gameLoadedHandler}>
+          Play Game
+        </button>
       </div>
     );
   }
 
   gameLoadedHandler = (event) => {
-    if (validateGame(final_game)) {
-      this.props.updateGame(final_game);
+    if (validateGame(sample_game)) {
+      this.props.updateGame(sample_game);
       this.props.addPlayer();
     } else {
       console.log('Invalid game.');

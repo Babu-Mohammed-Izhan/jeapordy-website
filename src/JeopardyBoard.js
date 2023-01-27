@@ -2,14 +2,13 @@ import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './JeopardyBoard.css';
 
-
 class JeopardyBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       solution: false,
-      dailyDoubleScreenPresented: false
-    }
+      dailyDoubleScreenPresented: false,
+    };
   }
 
   componentDidMount() {
@@ -34,7 +33,7 @@ class JeopardyBoard extends React.Component {
         board[currentCategory].category,
         board[currentCategory].clues[currentClue],
         board[currentCategory].clues[currentClue].value
-      ); 
+      );
     }
 
     return (
@@ -55,16 +54,15 @@ class JeopardyBoard extends React.Component {
                 <tr key={j}>
                   {board.map((category, i) => {
                     if (category.clues[j].chosen) {
-                      return (
-                        <td key={i} className="board-clue"></td>
-                      );
+                      return <td key={i} className="board-clue"></td>;
                     }
                     return (
                       <td
                         key={i}
                         onClick={() => this.props.chooseClue(i, j)}
-                        className="board-clue">
-                          ${category.clues[j].value}
+                        className="board-clue"
+                      >
+                        ${category.clues[j].value}
                       </td>
                     );
                   })}
@@ -78,20 +76,53 @@ class JeopardyBoard extends React.Component {
   }
 
   renderClue(categoryName, clue, value) {
-    const showDailyDoubleScreen = clue.dailyDouble && !this.state.dailyDoubleScreenPresented;
+    const showDailyDoubleScreen =
+      clue.dailyDouble && !this.state.dailyDoubleScreenPresented;
     return (
-      <div onClick={showDailyDoubleScreen ? this.switchDDToClue : this.state.solution ? this.backToBoard : this.toggleSolution} className="clue">
+      <div className="clue">
         <div className="clue-category-label">
           {categoryName} - ${clue.value}
         </div>
-        <div className={showDailyDoubleScreen ? "clue-display daily-double" : "clue-display"}>
-            <br/>
-            {showDailyDoubleScreen ? "Daily Double" : 
-             clue.html === true ? <div dangerouslySetInnerHTML={{ __html: this.state.solution ? clue.solution : clue.clue}} /> :
-             this.state.solution ? clue.solution : clue.clue}
+        <div
+          className={
+            showDailyDoubleScreen ? 'clue-display daily-double' : 'clue-display'
+          }
+        >
+          <br />
+          {showDailyDoubleScreen ? (
+            'Daily Double'
+          ) : clue.html === true ? (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: this.state.solution ? clue.solution : clue.clue,
+              }}
+            />
+          ) : this.state.solution ? (
+            <h1 className="cluesolution">{clue.solution}</h1>
+          ) : clue.isimage ? (
+            <img
+              src={require(`./images/${clue.clue}`)}
+              alt="clue"
+              className="clueimage"
+            />
+          ) : (
+            <h1 className={`cluetext ${clue.isemoji ? 'emoji' : ''}`}>
+              {clue.clue}
+            </h1>
+          )}
         </div>
+        <div
+          className="hiddenbutton"
+          onClick={
+            showDailyDoubleScreen
+              ? this.switchDDToClue
+              : this.state.solution
+              ? this.backToBoard
+              : this.toggleSolution
+          }
+        ></div>
       </div>
-    )
+    );
   }
 
   renderCategory(index) {
@@ -99,15 +130,9 @@ class JeopardyBoard extends React.Component {
     return (
       <div onClick={this.renderNextCategory} className="category-container">
         <TransitionGroup>
-          <CSSTransition
-            key={index}
-            timeout={1000}
-            classNames="categorybox"
-          >
+          <CSSTransition key={index} timeout={1000} classNames="categorybox">
             <div className="category-box">
-              <div className="category">
-                {board[index].category}
-              </div>
+              <div className="category">{board[index].category}</div>
             </div>
           </CSSTransition>
         </TransitionGroup>
@@ -119,7 +144,10 @@ class JeopardyBoard extends React.Component {
     const { board, categoriesShown, currentCategory, currentClue } = this.props;
 
     // First check for categoriesShown
-    if (categoriesShown < board.length && (event.key === " " || event.key === "Enter")) {
+    if (
+      categoriesShown < board.length &&
+      (event.key === ' ' || event.key === 'Enter')
+    ) {
       this.props.categoryShown();
     }
 
@@ -128,45 +156,42 @@ class JeopardyBoard extends React.Component {
     }
     const clue = board[currentCategory].clues[currentClue];
 
-    if (event.key === " " || event.key === "Enter") {
-      
+    if (event.key === ' ' || event.key === 'Enter') {
       // If we just showed the Daily Double screen, switch to the clue
       if (clue.dailyDouble && !this.state.dailyDoubleScreenPresented) {
         this.switchDDToClue();
       } else {
         this.toggleSolution();
       }
-
-    } else if (event.key === "Escape") {
+    } else if (event.key === 'Escape') {
       this.backToBoard();
     }
-  }
+  };
 
   renderNextCategory = () => {
     this.props.categoryShown();
-  }
+  };
 
   switchDDToClue = () => {
     this.setState({
       dailyDoubleScreenPresented: true,
-      solution: false
+      solution: false,
     });
-  }
+  };
 
   backToBoard = () => {
     this.setState({
       solution: false,
-      dailyDoubleScreenPresented: false
+      dailyDoubleScreenPresented: false,
     });
     this.props.backToBoard();
-  }
+  };
 
   toggleSolution = () => {
-    this.setState(state => ({
-      solution: !state.solution
+    this.setState((state) => ({
+      solution: !state.solution,
     }));
-  }
-
+  };
 }
 
 export default JeopardyBoard;
