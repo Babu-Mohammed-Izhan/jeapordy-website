@@ -41,34 +41,34 @@
         "category": "Animoji",
         "clues": [
           {
-            "isemoji": true,
+            "isimage": true,
             "value": 200,
-            "clue": "💀📓",
+            "clue": "emojis/deathnote.png",
             "solution": "Death Note"
           },
           {
-            "isemoji": true,
+            "isimage": true,
             "value": 400,
-            "clue": "🎹🎻",
+            "clue": "emojis/ylia.png",
             "solution": "Your lie in april"
           },
           {
-            "isemoji": true,
-            "value": 600,
-            "clue": "🦑👨‍🎓",
-            "solution": "Assasination Classroom"
+            "isimage": true,
+            "value": 800,
+            "clue": "emojis/jjba.png",
+            "solution": "Jojo Bizzare Adventure"
           },
           {
-            "isemoji": true,
-            "value": 800,
-            "clue": "⚰⛵⌚",
-            "solution": "Jojo Bizzare Adventure",
+            "isimage": true,
+            "value": 600,
+            "clue": "emojis/deadman.png",
+            "solution": "Deadman Wonderland",
             "dailyDouble": true
           },
           {
-            "isemoji": true,
+            "isimage": true,
             "value": 1000,
-            "clue": "👁🗣🧠",
+            "clue": "emojis/codeg.png",
             "solution": "Code Geass"
           }
         ]
@@ -109,32 +109,37 @@
         ]
       },
       {
-        "category": "OST",
+        "category": "Anime Memes",
         "clues": [
           {
+            "isimage": true,
             "value": 200,
-            "clue": "This is clue 4.1",
-            "solution": "Tokyo Revengers"
+            "clue": "memes/poke.jpg",
+            "solution": "Pokemon"
           },
           {
+            "isimage": true,
             "value": 400,
-            "clue": "This is clue 4.2",
-            "solution": "Call of the Night"
+            "clue": "memes/jjba.jpg",
+            "solution": "Jojo Bizzare Adventure"
           },
           {
+            "isimage": true,
             "value": 600,
-            "clue": "This is clue 4.3",
-            "solution": "ODDTAXI"
+            "clue": "memes/danmachi.jpg",
+            "solution": "DanMachi / \n Is It Wrong to Try to Pick Up Girls in a Dungeon? /"
           },
           {
+            "isimage": true,
             "value": 800,
-            "clue": "This is clue 4.4",
-            "solution": "Psycho Pass"
+            "clue": "memes/blends.png",
+            "solution": "Blend S"
           },
           {
+            "isimage": true,
             "value": 1000,
-            "clue": "This is clue 4.5",
-            "solution": "Re: Creators"
+            "clue": "memes/brave.png",
+            "solution": "The Brave Fighter of Sun Fighbird"
           }
         ]
       },
@@ -148,13 +153,13 @@
           },
           {
             "value": 400,
-            "clue": "A scam artist exploits a 14 year old to do most of his work for him",
-            "solution": "Mob Psycho"
+            "clue": "Disabled war veteran finds out through the power of FedEx that she has PTSD",
+            "solution": "Violet Evergarden"
           },
           {
             "value": 600,
-            "clue": "Disabled war veteran finds out through the power of FedEx that she has PTSD",
-            "solution": "Violet Evergarden"
+            "clue": "A scam artist exploits a 14 year old to do most of his work for him",
+            "solution": "Mob Psycho "
           },
           {
             "value": 800,
@@ -163,16 +168,16 @@
           },
           {
             "value": 1000,
-            "clue": "Teenager gets rock hard, pours acid on his friends, builds a lab to make white powder",
+            "clue": "Teenager gets rock hard, pours acid on his friends and makes white powder",
             "solution": "Dr.Stone"
           }
         ]
       }
     ],
     "final": {
-      "category": "Final Category",
-      "clue": "This is the Final Jeopardy clue.",
-      "solution": "What is the solution to the Final Jeopardy clue?"
+      "category": "The Final Gamble",
+      "clue": "In Tokyo Ghoul, Ghouls cannot eat human food as it tastes bad to them and makes them sick. There is an exception to this. Which human food they can consume without any reactions?",
+      "solution": "Coffee"
     }
   }
 }

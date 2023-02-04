@@ -111,13 +111,6 @@ class App extends React.Component {
       return (
         <div>
           <FinalJeopardy final={final} finishGame={this.finishGame} />
-          <Scoreboard
-            players={this.state.players}
-            currentValue={0}
-            updateScore={this.updateScore}
-            wagering={true}
-            stats={false}
-          />
         </div>
       );
     } else if (this.state.round === 'done') {

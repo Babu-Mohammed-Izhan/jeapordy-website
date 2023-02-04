@@ -18,7 +18,6 @@ class GameLoader extends React.Component {
     return (
       <div className="game-loader">
         <h1>Jeopardy Player</h1>
-        <h2>Play a Game</h2>
         <button className="playbutton" onClick={this.gameLoadedHandler}>
           Play Game
         </button>

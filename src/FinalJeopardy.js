@@ -31,11 +31,15 @@ class FinalJeopardy extends React.Component {
       )
     }
     return (
-      <div onClick={solution ? this.props.finishGame : this.toggleSolution} className="clue">
+      <div className="clue">
         <div className="clue-display">
           {final.html === true ? <div dangerouslySetInnerHTML={{ __html: solution ? final.solution : final.clue }} /> :
            solution ? final.solution : final.clue}
         </div>
+        <div
+          className="hiddenbutton"
+          onClick={solution ? this.props.finishGame : this.toggleSolution}
+        ></div>
       </div>
     )
   }
