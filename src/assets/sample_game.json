@@ -7,8 +7,8 @@
           {
             "isimage": true,
             "value": 200,
-            "clue": "waifus/mikasa.png",
-            "solution": "Mikasa Ackerman"
+            "clue": "waifus/bg.png",
+            "solution": "Sakurajima Mai"
           },
           {
             "isimage": true,
@@ -32,8 +32,7 @@
             "isimage": true,
             "value": 1000,
             "clue": "waifus/haruhi.png",
-            "solution": "Haruhi Suzumiya",
-            "dailyDouble": true
+            "solution": "Haruhi Suzumiya"
           }
         ]
       },
@@ -62,8 +61,7 @@
             "isimage": true,
             "value": 600,
             "clue": "emojis/deadman.png",
-            "solution": "Deadman Wonderland",
-            "dailyDouble": true
+            "solution": "Deadman Wonderland"
           },
           {
             "isimage": true,
@@ -127,7 +125,7 @@
             "isimage": true,
             "value": 600,
             "clue": "memes/danmachi.jpg",
-            "solution": "DanMachi / \n Is It Wrong to Try to Pick Up Girls in a Dungeon? /"
+            "solution": "DanMachi / Is It Wrong to Try to Pick Up Girls in a Dungeon?"
           },
           {
             "isimage": true,
